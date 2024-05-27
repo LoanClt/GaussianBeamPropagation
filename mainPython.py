@@ -219,6 +219,11 @@ E_encerclee1 = np.array(E_encerclee)*100
 
 r_E1 = np.array(r_E)*10**6
 
+x1 = np.array(x1)*10**6
+y1 = np.array(y1)*10**6
+
+VisuIdB(x1,y1,U_focal,-15)
+
 plt.figure()
 plt.plot(eps1, RMS_spot1)
 plt.title("rayon RMS selon z")
