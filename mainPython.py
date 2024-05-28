@@ -77,7 +77,7 @@ def VisuIdB(*args):
             tronc = False
 
     else:
-        raise ValueError('Syntaxe d''appel incorrect! Il faut entre 2 et 5 arguments en entrée; voir l''aide-en-ligne.')
+        raise ValueError('Syntaxe d\'appel incorrect! Il faut entre 2 et 5 arguments en entrée; voir l\'aide-en-ligne.')
 
     U = np.real(AC * np.conj(AC))
     seuil_eff = 10**(seuil_dB / 10)
@@ -85,19 +85,18 @@ def VisuIdB(*args):
     if not tronc:
         # seuil_dB RELATIF:
         if seuil_dB >= 0:
-            raise ValueError('L''argument "seuil_dB" doit être négatif (valeur relative au max à 0dB)')
-        plt.figure(), plt.imshow(10 * np.log10(np.maximum(seuil_eff, U / np.max(U))), cmap='gray'), plt.axis('image')
-        h = plt.colorbar()
-        h.set_label('dB_{relatif}')
-        h.ax.set_xlabel(f'max={np.max(U):.1e}', fontsize=8)
+            raise ValueError('L\'argument "seuil_dB" doit être négatif (valeur relative au max à 0dB)')
+        plt.figure()
+        plt.imshow(10 * np.log10(np.maximum(seuil_eff, U / np.max(U))), cmap='gray', extent=(x[0], x[1], y[0], y[1]))
+        plt.colorbar(label='dB_{relatif}')
     else:
-        plt.figure(), plt.imshow(np.minimum(tronc_dB, 10 * np.log10(np.maximum(seuil_eff, U))), cmap='gray'), plt.axis('image')
-        h = plt.colorbar()
-        h.set_label('dB_{absolu}')
-    plt.gca().set_ylim(y[0], y[-1])
-    plt.gca().invert_yaxis()
+        plt.figure()
+        plt.imshow(np.minimum(tronc_dB, 10 * np.log10(np.maximum(seuil_eff, U))), cmap='gray', extent=(x[0], x[1], y[0], y[1]))
+        plt.colorbar(label='dB_{absolu}')
+
+    plt.gca().set_aspect('auto')
+    plt.gca().invert_yaxis() if YDir == 'reverse' else None
     plt.gca().tick_params(direction='out')
-    h.ax.tick_params(direction='out')
     plt.show()
     
     
@@ -239,3 +238,5 @@ plt.plot(r_E1, E_encerclee_meilleur_foyer)
 plt.title("E_{encerclée} en fonction du rayon")
 plt.xlabel("r [\mum]" )
 plt.ylabel("E_{encerclée} [%]")
+
+
